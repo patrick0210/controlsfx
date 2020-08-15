@@ -101,11 +101,6 @@ public class CheckComboBoxSkin<T> extends SkinBase<CheckComboBox<T>> {
         // installs a custom CheckBoxListCell cell factory
         comboBox.setCellFactory(listView -> {
             CheckBoxListCell<T> result = new CheckBoxListCell<>(control::getItemBooleanProperty);
-            result.focusedProperty().addListener((o, ov, nv) -> {
-                if (nv) {
-                    result.getParent().requestFocus();
-                }
-            });
             //clicking on the label checks/unchecks the item
             result.setOnMouseClicked(e -> {
                 T item = result.getItem();
@@ -248,6 +243,7 @@ public class CheckComboBoxSkin<T> extends SkinBase<CheckComboBox<T>> {
             } else if (e.getCode() == KeyCode.TAB ||
                     new KeyCodeCombination(KeyCode.TAB, KeyCombination.SHIFT_ANY).match(e)) {
                 e.consume();
+                listView.requestFocus();
                 hide();
                 control.fireEvent(e);
             }  else if (e.getCode() == KeyCode.LEFT || e.getCode() == KeyCode.RIGHT) {
